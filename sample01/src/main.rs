@@ -48,9 +48,34 @@ fn main() {
     let str6 = str5.clone();
     println!("str5 = {}", str5);
     println!("str6 = {}", str6);
+
+    // 関数に変数を渡すとmoveされる。
+    let str7 = String::from("abc");
+    hoge(str7); // moveされた。
+    // println!("str7 = {}", str7); // moveされたため変数は使用できない。
+
+    // 関数に参照を渡すだけならmoveされない。
+    let str8 = String::from("abc");
+    fuga(&str8); // moveされていない。
+    println!("str8 = {}", str8); // moveされていないため使用できる。
+
+    // 同時に２つの変数をミュータブルにすることはできない。
+    let mut str9 = String::from("abc");
+    let str9_1 = &str9;
+    // let str9_2 = &mut str9;
+    // println!("{}, {}", str9, str9_1, str9_2);
+    println!("{}, {}", str9, str9_1);
 }
 
 // 型を返す
 fn type_of<T>(_: T) -> String {
     std::any::type_name::<T>().to_string()
+}
+
+fn hoge (s :String) {
+    println!("s = {}", s);
+}
+
+fn fuga (s :&String) {
+    println!("s = {}", s);
 }
